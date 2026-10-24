@@ -23,19 +23,48 @@
     </header>
     <main>
         <section>
-            <div class="searc-container">
-                <form action="/search">
-                        <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+            <form class="search-form">
+                    <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+                </svg>
+                <input
+                type="text"
+                class="search-bar"
+                id="search-input"
+                placeholder="Search for a movie">
+                <button class="search-btn" type="submit" id="search-btn">Search
+                </button>
+            </form>
+        </section>
+        <section>
+            <div class="film-container">
+                <div class="empty-state">
+                    <svg class="film-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <mask id="film-mask">
+                                <!-- white = visible, black = cut out -->
+                                <rect x="2" y="3" width="20" height="18" rx="3" fill="#fff" />
+
+                                <!-- left sprocket holes -->
+                                <rect x="4" y="5" width="2" height="2.5" rx="0.5" fill="#000" />
+                                <rect x="4" y="10.75" width="2" height="2.5" rx="0.5" fill="#000" />
+                                <rect x="4" y="16.5" width="2" height="2.5" rx="0.5" fill="#000" />
+
+                                <!-- right sprocket holes -->
+                                <rect x="18" y="5" width="2" height="2.5" rx="0.5" fill="#000" />
+                                <rect x="18" y="10.75" width="2" height="2.5" rx="0.5" fill="#000" />
+                                <rect x="18" y="16.5" width="2" height="2.5" rx="0.5" fill="#000" />
+
+                                <!-- center frames (top and bottom) -->
+                                <rect x="8" y="5" width="8" height="6" rx="1" fill="#000" />
+                                <rect x="8" y="13" width="8" height="6" rx="1" fill="#000" />
+                            </mask>
+                        </defs>
+                        <rect width="24" height="24" fill="currentColor" mask="url(#film-mask)" />
                     </svg>
-                    <input
-                    type="text"
-                    class="search-bar"
-                    id="search-input"
-                    placeholder="Search for a movie">
-                    <button class="search-btn" type="submit""></button>
-                </form>
+                    <p>Start exploring</p>
+                </div>
             </div>
         </section>
     </main>
