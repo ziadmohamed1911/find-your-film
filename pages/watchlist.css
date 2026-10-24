@@ -1,0 +1,287 @@
+/* basic */
+*, *::after, *::before{
+    box-sizing: border-box;
+}
+
+html {
+    background: #1e1e1f;
+}
+
+body{
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+main{
+    flex: 1;
+}
+/* Layout */
+
+header{
+    color: #fff;
+    padding: 4em 5em;
+    background: #000 url("../images/header-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.header-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-container h1{
+    font-size: 2.67rem;
+    font-weight: 800;
+}
+
+.header-container a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 700;
+}   
+
+/* search-bar */
+.search-form{
+    display: flex;
+    align-items: stretch;
+    width: min(90%, 540px);
+    margin: -22px auto 0;
+    position: relative;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.search-icon{
+    width: 20px;
+    height: 20px;
+    margin: auto 0 auto 12px;
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.search-bar{
+    flex: 1;
+    min-width: 0;
+    padding: 12px 12px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: #111827;
+    background: transparent;
+    font-family: inherit;
+}
+
+
+.search-btn{
+    padding: 0px 28px;
+    border: none;
+    border-left: 1px solid #d1d5db;
+    font-family: inherit;
+    background: #f9fafb;
+    color: #374151;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.search-btn:hover{
+    background: #f3f4f6;
+}
+
+.search-form:focus-within {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+.films-contianer{
+    height: 100%;
+}
+
+/* watchlist no items */
+.empty-state{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 60vh;
+}
+
+.empty-state h2{
+    font-size: 1.125rem;
+    color: #837f7f;
+    margin: 0 0 20px;
+}
+
+.empty-state a{
+    text-decoration: none;
+    font-size: 0.89rem;
+    color: #363636;
+    font-weight: 600;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+.empty-state a:hover{
+    text-decoration: underline;
+}
+
+.empty-state a i{
+    font-size: 1.2rem;
+}
+
+
+.empty-state[hidden]{
+    display: none;
+}
+/* searched */
+#movie-list{
+    display: flex;
+    flex-direction: column;
+    width: min(90%,540px);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.movie-card {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.movie-poster{
+    background: #e5e7eb;
+    font-size: 0;
+    width: 99Px;
+    height: 174px;
+    object-fit: cover;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.movie-info{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.movie-header{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.movie-title{
+    margin: 0;
+    margin-top: 4px;
+    flex-shrink: 0;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #111827;
+}
+
+.movie-rating{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    font-size: 0.75rem;
+    color: #111827;
+}
+
+.movie-rating i{
+    color: #fec654;
+}
+
+.movie-meta{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.75rem;
+    color: #111827;
+}
+
+.watchlist-btn{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: 0.75rem;
+    cursor: pointer;
+    color: #111827;
+}
+
+.watchlist-btn i{
+    font-size: 1rem;
+}
+
+.movie-plot{
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #6b7280;
+}
+
+.read-more-btn{
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #111827;
+    cursor: pointer;
+}
+
+.empty-state.is-error .film-icon {
+    display: none;
+}
+
+.empty-state.is-error p {
+    max-width: 280px;
+    text-align: center;
+}
+
+
+/* footer */
+
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    background: #1e1e1f;
+    color: #b9b8b8;
+    padding: 10px 20px;
+    margin-bottom: 0;
+}
+
+footer h2{
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin: 0.86em 0 0;
+}
+
+footer p{
+    font-size: 0.75rem;
+    margin:  0 0 1em;
+}
