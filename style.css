@@ -3,11 +3,22 @@
 *, *::after, *::before{
     box-sizing: border-box;
 }
+
+html {
+    background: #1e1e1f;
+}
+
 body{
     margin: 0;
     font-family: "Inter", sans-serif;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
 }
 
+main{
+    flex: 1;
+}
 /* Layout */
 
 header{
@@ -94,7 +105,7 @@ header{
 
 /* film display-idle */
 
-.film-contianer{
+.films-contianer{
     height: 100%;
 }
 
@@ -120,4 +131,144 @@ header{
     font-size: 24px;
     font-weight: 700;
     color: #dbdbdb;
+}
+
+/* film-container searched */
+
+#movie-list{
+    display: flex;
+    flex-direction: column;
+    width: min(90%,540px);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.movie-card {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.movie-poster{
+    background: #e5e7eb;
+    font-size: 0;
+    width: 99Px;
+    height: 174px;
+    object-fit: cover;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.movie-info{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.movie-header{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.movie-title{
+    margin: 0;
+    margin-top: 4px;
+    flex-shrink: 0;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #111827;
+}
+
+.movie-rating{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    font-size: 0.75rem;
+    color: #111827;
+}
+
+.movie-rating i{
+    color: #fec654;
+}
+
+.movie-meta{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.75rem;
+    color: #111827;
+}
+
+.watchlist-btn{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: 0.75rem;
+    cursor: pointer;
+    color: #111827;
+}
+
+.watchlist-btn i{
+    font-size: 1rem;
+}
+
+.movie-plot{
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #6b7280;
+}
+
+.read-more-btn{
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #111827;
+    cursor: pointer;
+}
+
+.empty-state.is-error .film-icon {
+    display: none;
+}
+
+.empty-state.is-error p {
+    max-width: 280px;
+    text-align: center;
+}
+
+/* footer */
+
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    background: #1e1e1f;
+    color: #b9b8b8;
+    padding: 10px 20px;
+    margin-bottom: 0;
+}
+
+footer h2{
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin: 0.86em 0 0;
+}
+
+footer p{
+    font-size: 0.75rem;
+    margin:  0 0 1em;
 }
