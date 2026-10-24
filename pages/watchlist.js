@@ -1,6 +1,7 @@
-const movieList = document.getElementById("movie-list")
-const emptyState = document.querySelector(".empty-state")
+/* ---------- Config ---------- */
 const WATCHLIST_KEY = "watchlist"
+const PLOT_PREVIEW_LENGTH = 130
+
 const PLACEHOLDER = "data:image/svg+xml;utf8," + encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" width="99" height="147">
         <rect width="99" height="147" fill="#e5e7eb"/>
@@ -8,74 +9,102 @@ const PLACEHOLDER = "data:image/svg+xml;utf8," + encodeURIComponent(
             text-anchor="middle" font-family="sans-serif">No poster</text>
     </svg>`)
 
+/* ---------- DOM ---------- */
+const movieList = document.getElementById("movie-list")
+const emptyState = document.querySelector(".empty-state")
 
-
-function getWatchList() {
-    try{
-       return JSON.parse(localStorage.getItem(WATCHLIST_KEY)) || []
-    } catch{
+/* ---------- Watchlist storage ---------- */
+function getWatchlist() {
+    try {
+        return JSON.parse(localStorage.getItem(WATCHLIST_KEY)) || []
+    } catch {
         return []
     }
 }
 
-function renderWatchlist() {
-    const films = getWatchList()
-    emptyState.hidden = films.length > 0
+function removeFromWatchlist(id) {
+    const updated = getWatchlist().filter(film => film.imdbID !== id)
+    localStorage.setItem(WATCHLIST_KEY, JSON.stringify(updated))
+}
 
-    movieList.innerHTML = films.map(film => {
-        const plot = film.Plot !== "N/A" ? film.Plot : "No plot available."
-        const isLong = plot.length > 130
-        const shortPlot = isLong ? plot.slice(0, 130).trim() + "..." : plot
+/* ---------- Helpers ---------- */
+const HTML_ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }
 
-        return `
+function escapeHtml(text) {
+    return String(text).replace(/[&<>"']/g, char => HTML_ESCAPES[char])
+}
+
+// OMDb returns the string "N/A" for missing values
+function hasValue(value) {
+    return Boolean(value) && value !== "N/A"
+}
+
+/* ---------- Rendering ---------- */
+function createFilmCard(film) {
+    const title = escapeHtml(film.Title)
+    const poster = escapeHtml(hasValue(film.Poster) ? film.Poster : PLACEHOLDER)
+    const rating = hasValue(film.imdbRating) ? film.imdbRating : "-"
+    const plot = hasValue(film.Plot) ? film.Plot : "No plot available."
+
+    const isLong = plot.length > PLOT_PREVIEW_LENGTH
+    const preview = isLong ? `${plot.slice(0, PLOT_PREVIEW_LENGTH).trim()}...` : plot
+
+    return `
         <div class="movie-card">
-            <img class="movie-poster"
-                 src="${film.Poster !== "N/A" ? film.Poster : PLACEHOLDER}"
-                 alt="${film.Title} poster">
+            <img class="movie-poster" src="${poster}" alt="${title} poster">
             <div class="movie-info">
                 <div class="movie-header">
-                    <h3 class="movie-title">${film.Title}</h3>
+                    <h3 class="movie-title">${title}</h3>
                     <p class="movie-rating">
                         <i class="fa-solid fa-star"></i>
-                        ${film.imdbRating !== "N/A" ? film.imdbRating : "-"}
+                        ${escapeHtml(rating)}
                     </p>
                 </div>
                 <div class="movie-meta">
-                    <span class="movie-runtime">${film.Runtime}</span>
-                    <span class="movie-genre">${film.Genre}</span>
-                    <button class="watchlist-btn" type="button" data-id="${film.imdbID}">
+                    <span class="movie-runtime">${escapeHtml(film.Runtime)}</span>
+                    <span class="movie-genre">${escapeHtml(film.Genre)}</span>
+                    <button class="watchlist-btn" type="button" data-id="${escapeHtml(film.imdbID)}">
                         <i class="fa-solid fa-circle-minus"></i>
                         Remove
                     </button>
                 </div>
                 <p class="movie-plot">
-                    <span class="plot-short">${shortPlot}</span>
-                    <span class="plot-full" hidden>${plot}</span>
+                    <span class="plot-short">${escapeHtml(preview)}</span>
+                    <span class="plot-full" hidden>${escapeHtml(plot)}</span>
                     ${isLong ? `<button class="read-more-btn" type="button">Read more</button>` : ""}
                 </p>
             </div>
         </div>
-        `
-    }).join("")
+    `
 }
 
+function renderWatchlist() {
+    const films = getWatchlist()
 
-movieList.addEventListener("click" ,(e) => {
-    const btn = e.target.closest(".watchlist-btn")
-    if(e.target.classList.contains("read-more-btn")){
-        const plot = e.target.closest(".movie-plot")
-        plot.querySelector(".plot-short").hidden = true
-        plot.querySelector(".plot-full").hidden = false
-        e.target.remove()
-    }
+    emptyState.hidden = films.length > 0
+    movieList.innerHTML = films.map(createFilmCard).join("")
+}
 
-    if (btn) {
-        const updated = getWatchList().filter(f => f.imdbID !== btn.dataset.id)
-        localStorage.setItem(WATCHLIST_KEY, JSON.stringify(updated))
+/* ---------- Event handlers ---------- */
+function expandPlot(readMoreBtn) {
+    const plot = readMoreBtn.closest(".movie-plot")
+    plot.querySelector(".plot-short").hidden = true
+    plot.querySelector(".plot-full").hidden = false
+    readMoreBtn.remove()
+}
+
+movieList.addEventListener("click", (e) => {
+    const readMoreBtn = e.target.closest(".read-more-btn")
+    if (readMoreBtn) return expandPlot(readMoreBtn)
+
+    const removeBtn = e.target.closest(".watchlist-btn")
+    if (removeBtn) {
+        removeFromWatchlist(removeBtn.dataset.id)
         renderWatchlist()
     }
 })
 
+// "error" events don't bubble, so listen in the capture phase
 movieList.addEventListener("error", (e) => {
     if (e.target.classList.contains("movie-poster")) {
         e.target.onerror = null

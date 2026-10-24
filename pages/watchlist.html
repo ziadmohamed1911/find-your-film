@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your saved movies, all in one place.">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,22 +23,26 @@
             <a href="../index.html">Search for movies</a>
         </div>
     </header>
+
     <main>
         <section>
             <div class="empty-state" hidden>
                 <h2>Your watchlist is looking a little empty...</h2>
-               <a href="../index.html">
-                <i class="fa-solid fa-circle-plus"></i>
-                Let’s add some movies!
-               </a>
+                <a href="../index.html">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    Let’s add some movies!
+                </a>
             </div>
+
             <div class="movie-list" id="movie-list"></div>
         </section>
     </main>
+
     <footer>
         <h2>Find Your Film</h2>
         <p>&copy;2026 All rights reserved</p>
     </footer>
+
     <script src="watchlist.js" defer></script>
 </body>
 </html>
